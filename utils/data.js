@@ -13,6 +13,14 @@ const names = [
   ``,
 ];
 
+const usernames = [
+  'Username1',
+  'Username2',
+  'Username3',
+  'Username4',
+  'Username5'
+]
+
 const thoughtTextBodies = [
   'Thought 1',
   'Thought 2',
@@ -31,16 +39,18 @@ const possibleReactions = [
 
 const users = [];
 
+//This gets a random item given an array.
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const getRandomName = () =>
   `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
 
+//This function generates random thoughts given a number.
 const getRandomThoughts = (int) => {
   let results = [];
   for (let i = 0; i < int; i++) {
     results.push({
-      username: Math.random() < 0.5,
+      username: usernames,
       thoughtText: getRandomArrItem(thoughtTextBodies),
       reactions: [...getThoughtReactions(3)],
     });
@@ -48,6 +58,7 @@ const getRandomThoughts = (int) => {
   return results;
 };
 
+//This creates the Reactions that will be added to each Thought.
 const getThoughtReactions = (int) => {
   if (int === 1) {
     return getRandomArrItem(possibleReactions);
@@ -56,10 +67,14 @@ const getThoughtReactions = (int) => {
   for (let i = 0; i < int; i++) {
     results.push({
       reactionBody: getRandomArrItem(possibleReactions),
-      username: getRandomName(),
+      username: usernames,
     });
   }
   return results;
 };
 
-module.exports = { getRandomName, getRandomThoughts, getRandomThoughts };
+//This exports the functions needed in the seed.js file.
+module.exports = { 
+  getRandomName, 
+  getRandomThoughts
+ };

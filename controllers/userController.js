@@ -1,11 +1,13 @@
 const User = require('../models/User');
 
 module.exports = {
+  //This query gets all users.
   getUsers(req, res) {
     User.find()
       .then((users) => res.json(users))
-      .catch((err) => res.status(500).json(err)); //Could also use the async-await structure here.
+      .catch((err) => res.status(500).json(err));
   },
+  //This query gets a single user by user ID.
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('-__v') //Select is used to select different columns. The "- underscore v" is saying don't include the version. Mongo has the version included by default.
@@ -16,6 +18,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+  //This query gets all friends. This is not correct because I either need to get all friends per user ID or the friends have to have IDs. With more time, I would try implementing either of those methods.
   getUserFriends(req, res) {
     User.findMany(
       { _id: req.params.userId },
@@ -29,14 +32,15 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  //This creates a new user.
+  //This query creates a user.
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
+  //This query updates a user.
   updateUser(req, res) {
-    User.findOneAndUpdate( //When you update the thought, you don't have to go through the user. You are just updating the thought.
+    User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
@@ -51,6 +55,7 @@ module.exports = {
         res.status(500).json(err);
       });
   },
+  //This query deletes a user.
   deleteUser(req, res) {
     User.findOneAndRemove(
       { _id: req.params.userId },
