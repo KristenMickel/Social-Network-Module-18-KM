@@ -13,9 +13,9 @@ connection.once('open', async () => {
   const thoughts = getRandomThoughts(10);
 
   for (let i = 0; i < 20; i++) {
-    const fullName = getRandomName();
-    const first = fullName.split(' ')[0];
-    const last = fullName.split(' ')[1];
+    const fullname = getRandomName();
+    const first = fullname.split(' ')[0];
+    const last = fullname.split(' ')[1];
 
     users.push({
       first,
